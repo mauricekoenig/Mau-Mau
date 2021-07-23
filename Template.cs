@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace MK.MauMau
 {
-    public sealed class CardTemplate : MonoBehaviour
+    public sealed class Template : MonoBehaviour
     {
         [SerializeField] private Card _card;
 
