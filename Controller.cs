@@ -6,8 +6,9 @@ using UnityEngine.EventSystems;
 
 namespace MK.MauMau
 {
-    public sealed class Controller : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler
+    public sealed class Controller : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerUpHandler
     {
+        
         [SerializeField] private bool _isDragging = false;
 
         private Canvas _canvas;
@@ -16,6 +17,13 @@ namespace MK.MauMau
         public bool IsDragging {
             get { return _isDragging; }
             private set {  }
+        }
+
+        private Container _container;
+
+        public Container Container {
+            get { return _container; }
+            private set { }
         }
 
         [SerializeField] private Transform _returnParent;
@@ -32,6 +40,14 @@ namespace MK.MauMau
             set {  }
         }
 
+        private bool _isPlayable;
+
+        public bool IsPlayable {
+            get { return _isPlayable; }
+            set { _isPlayable = value; }
+        }
+
+
 
         private void Awake() {
 
@@ -44,9 +60,11 @@ namespace MK.MauMau
             
             if (!IsDragging) {
 
+                _container = new Container(false, false);
                 _isDragging = true;
                 _returnParent = transform.parent;
                 _index = transform.GetSiblingIndex();
+                transform.SetParent(transform.root);
             }
 
         }
@@ -67,9 +85,39 @@ namespace MK.MauMau
             
             if (IsDragging) {
 
-                transform.SetParent(ReturnParent);
-                _isDragging = false;
+                if (Container.InZone && Container.IsPlayable) {
+
+                    transform.SetParent(GameManager.Instance.Middle);
+                    _returnParent = null;
+                    _index = -1;
+                } 
             }
+        }
+
+
+        public void OnPointerUp(PointerEventData eventData) {
+
+            if (!Container.InZone && !Container.IsPlayable) {
+
+                transform.SetParent(ReturnParent);
+                transform.SetSiblingIndex(Index);
+            }
+
+        }
+
+        public void EditContainer (ContainerStates state, bool value) {
+
+            switch (state) {
+
+                case ContainerStates.InZone:
+                    _container.InZone = value;
+                    break;
+
+                case ContainerStates.IsPlayable:
+                    _container.IsPlayable = value;
+                    break;
+            }
+
         }
 
     }

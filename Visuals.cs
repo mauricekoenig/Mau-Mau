@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace MK.MauMau
 {
-    public sealed class Template : MonoBehaviour
+    public sealed class Visuals : MonoBehaviour
     {
         [SerializeField] private Card _card;
 
@@ -29,10 +29,10 @@ namespace MK.MauMau
 
         private void Start() {
 
-            SetSprite();
+            CreateSprite();
         }
 
-        private void SetSprite() {
+        private void CreateSprite() {
 
             if (Image != null && Card != null) {
 

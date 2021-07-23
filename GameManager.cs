@@ -27,6 +27,13 @@ namespace MK.MauMau
             set { _remote = value; }
         }
 
+        [SerializeField] private Transform _middle;
+
+        public Transform Middle {
+            get { return _middle; }
+            private set { }
+        }
+
         private void Awake() {
 
             if (Instance == null) Instance = this;
