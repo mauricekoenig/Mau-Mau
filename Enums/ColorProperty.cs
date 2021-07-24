@@ -1,7 +1,7 @@
 ﻿
 namespace MK.MauMau
 {
-    public enum CardColor
+    public enum ColorProperty
     {
         Heart = 1,
         Diamond = 2,
