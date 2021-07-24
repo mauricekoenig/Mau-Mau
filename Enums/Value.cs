@@ -3,7 +3,7 @@
 
 namespace MK.MauMau
 {
-    public enum CardValue
+    public enum Value
     {
         Seven = 7,
         Eight = 8,
